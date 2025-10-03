@@ -28,6 +28,8 @@ fn setup(
         Mesh3d(sphere_mesh.clone()),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: Color::srgb(1.0, 0.0, 0.0),
+            metallic: 0.9,
+            perceptual_roughness: 0.1,
             ..default()
         })),
         Transform::from_xyz(0.0, 0.0, 0.0),
@@ -38,6 +40,8 @@ fn setup(
         Mesh3d(sphere_mesh.clone()),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: Color::srgb(0.0, 1.0, 0.0),
+            metallic: 0.9,
+            perceptual_roughness: 0.1,
             ..default()
         })),
         Transform::from_xyz(2.0, 0.0, 0.0),
@@ -48,6 +52,8 @@ fn setup(
         Mesh3d(sphere_mesh.clone()),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: Color::srgb(0.0, 0.0, 1.0),
+            metallic: 0.9,
+            perceptual_roughness: 0.1,
             ..default()
         })),
         Transform::from_xyz(-2.0, 0.0, 0.0),
@@ -58,19 +64,37 @@ fn setup(
         Mesh3d(sphere_mesh.clone()),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: Color::srgb(1.0, 1.0, 0.0),
+            metallic: 0.9,
+            perceptual_roughness: 0.1,
             ..default()
         })),
         Transform::from_xyz(0.0, 2.0, 0.0),
     ));
 
-    // Light
+    // Ambient light
+    commands.insert_resource(AmbientLight {
+        color: Color::WHITE,
+        brightness: 100.0,
+    });
+
+    // Light 1 - Above and to the left
     commands.spawn((
         DirectionalLight {
             illuminance: 10000.0,
             shadows_enabled: true,
             ..default()
         },
-        Transform::from_xyz(4.0, 8.0, 4.0).looking_at(Vec3::ZERO, Vec3::Y),
+        Transform::from_xyz(-4.0, 8.0, 2.0).looking_at(Vec3::ZERO, Vec3::Y),
+    ));
+
+    // Light 2 - Above and to the right
+    commands.spawn((
+        DirectionalLight {
+            illuminance: 10000.0,
+            shadows_enabled: true,
+            ..default()
+        },
+        Transform::from_xyz(4.0, 8.0, 2.0).looking_at(Vec3::ZERO, Vec3::Y),
     ));
 
     // Camera
